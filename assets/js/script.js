@@ -295,7 +295,7 @@ function setupChangeButton() {
 }
 
 dateBtn.addEventListener('click', function () {
-    const nextDiv = dateBtn.nextElementSibling;
+    const nextDiv = dateBtn.nextElementSibling.nextElementSibling;;
     nextDiv.classList.toggle('hidden')
 });
 
@@ -319,7 +319,7 @@ document.addEventListener('DOMContentLoaded', function () {
             button.classList.remove('text-black');
             if (!button.querySelector('.line')) {
                 const lineDiv = document.createElement('div');
-                lineDiv.className = 'line absolute w-[4px] h-[32px] bg-[#2C8DC7] left-0';
+                lineDiv.className = 'line absolute w-[4px] h-[52px] bg-[#2C8DC7] left-0';
                 button.prepend(lineDiv);
             }
 
@@ -335,6 +335,148 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     });
+
+
+
+    const monthButtons = document.querySelectorAll('#monthBtn button');
+    const el1 = document.getElementById('el1');
+    const el2 = document.getElementById('el2');
+    const dateBtn = document.getElementById('dateBtn');
+    const commutingDiv = document.querySelector('.commuting');
+    const departureSpan = commutingDiv.querySelector('.departure');
+    const landingSpan = commutingDiv.querySelector('.landing');
+    
+    const azMonths = [
+        "Yanvar", "Fevral", "Mart", "Aprel", "May", "İyun", 
+        "İyul", "Avqust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"
+    ];
+    
+    let selectedDates = [];
+    let currentMonths = [6, 7]; // İyul və Avqust 2024 (0-based index)
+    
+    monthButtons.forEach((button, index) => {
+        button.addEventListener('click', () => {
+            updateActiveMonth(index);
+            renderCalendars(index, index + 1);
+        });
+    });
+    
+    function updateActiveMonth(index) {
+        monthButtons.forEach((btn, i) => {
+            btn.classList.toggle('active', i === index);
+            if (i === index) {
+                const line = document.createElement('div');
+                line.className = 'line absolute w-[4px] h-[52px] bg-[#2C8DC7] left-0';
+                btn.appendChild(line);
+            } else {
+                const line = btn.querySelector('.line');
+                if (line) line.remove();
+            }
+        });
+    }
+    
+    function renderCalendars(month1 = 0, month2 = 1) {
+        currentMonths = [month1, month2];
+        renderCalendar(el1, month1);
+        renderCalendar(el2, month2);
+    }
+    
+    function renderCalendar(element, monthIndex) {
+        const date = new Date(2024, monthIndex + 6, 1); // İstifadəçinin təyin etdiyi ayın 1-dən başlayır
+        const year = date.getFullYear();
+        const month = date.getMonth();
+        const firstDay = new Date(year, month, 1);
+        const lastDay = new Date(year, month + 1, 0);
+    
+        let table = '<table class="w-full">';
+        table += '<tr><th colspan="7" class="text-[16px] font-bold py-[16px]">' + 
+                 azMonths[month] + ' ' + year + '</th></tr>';
+        table += '<tr class="text-[14px] font-medium text-[#9CA3AF]">' +
+                 '<th>BE</th><th>ÇA</th><th>Ç</th><th>CA</th><th>C</th><th>Ş</th><th>B</th></tr>';
+    
+        let day = 1;
+        const firstDayIndex = (firstDay.getDay() + 6) % 7; // Bazar ertəsindən başlamaq üçün
+    
+        for (let i = 0; i < 6; i++) {
+            table += '<tr>';
+            for (let j = 0; j < 7; j++) {
+                if (i === 0 && j < firstDayIndex) {
+                    table += '<td></td>';
+                } else if (day > lastDay.getDate()) {
+                    table += '<td></td>';
+                } else {
+                    const currentDate = new Date(year, month, day);
+                    const isSelected = selectedDates.some(d => d.toDateString() === currentDate.toDateString());
+                    table += `<td class="text-[13px] leading-[20px] size-[40px] font-medium cursor-pointer text-center py-[8px] ${isSelected ? 'bg-[#2C8DC7] text-white rounded-[6px]' : ''}" 
+                                  onclick="selectDate(${year}, ${month}, ${day})">${day}</td>`;
+                    day++;
+                }
+            }
+            table += '</tr>';
+            if (day > lastDay.getDate()) break;
+        }
+        table += '</table>';
+        element.innerHTML = table;
+    }
+    
+    function formatDateString(date) {
+        const day = date.getDate();
+        const month = azMonths[date.getMonth()];
+        return `${day} ${month}`;
+    }
+    
+    window.selectDate = function(year, month, day) {
+        const selectedDate = new Date(year, month, day);
+        const index = selectedDates.findIndex(d => d.toDateString() === selectedDate.toDateString());
+        
+        if (index > -1) {
+            selectedDates.splice(index, 1);
+        } else {
+            if (selectedDates.length < 2) {
+                selectedDates.push(selectedDate);
+            } else {
+                selectedDates.shift();
+                selectedDates.push(selectedDate);
+            }
+        }
+    
+        selectedDates.sort((a, b) => a - b);
+        updateSelectedDates();
+        renderCalendars(currentMonths[0], currentMonths[1]);
+    }
+    
+    function updateSelectedDates() {
+        if (selectedDates.length > 0) {
+            const [departureDate, returnDate] = selectedDates;
+            if (departureDate) {
+                departureSpan.textContent = formatDateString(departureDate);
+            }
+            if (returnDate) {
+                landingSpan.textContent = formatDateString(returnDate);
+            }
+            dateBtn.classList.add('hidden');
+            commutingDiv.classList.remove('hidden');
+    
+            // "kalendar" klasslı divə 'hidden' klassı əlavə etmək
+            if (selectedDates.length === 2) {
+                const kalendarDiv = document.querySelector('.kalendar');
+                if (kalendarDiv) {
+                    kalendarDiv.classList.add('hidden');
+                }
+            }
+        }
+    }
+    
+    function formatDateString(date) {
+        const day = date.getDate();
+        const month = azMonths[date.getMonth()];
+        return `${day} ${month}`;
+    }
+    
+    // İlk renderi başlat
+    updateActiveMonth(0);
+    renderCalendars();
+    
 
 
     
