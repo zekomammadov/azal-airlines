@@ -81,6 +81,9 @@
                                             <div class="label leading-[24px] top-[calc(50%_-_12px)] absolute left-0 origin-top-left">
                                                 Haradan
                                             </div>
+                                            <button class="clear-btn hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+                                                &#x2715;
+                                            </button>
                                         </div>
                                     </label>
                                     <div class="w-[330px] dropdown hidden absolute top-full left-0 bg-white border border-[#DBE0E4] rounded-[12px] max-h-[200px] overflow-auto z-10"></div>
@@ -97,6 +100,9 @@
                                             <div class="label leading-[24px] top-[calc(50%_-_12px)] absolute left-0 origin-top-left">
                                                 Haraya
                                             </div>
+                                            <button class="clear-btn hidden absolute right-2 top-1/2 transform -translate-y-1/2">
+                                                &#x2715;
+                                            </button>
                                         </div>
                                     </label>
                                     <div class="w-[330px] dropdown hidden absolute top-full left-0 bg-white border border-[#DBE0E4] rounded-[12px] max-h-[200px] overflow-auto z-10"></div>
@@ -163,7 +169,7 @@
                                     </button>
                                 </div>
                                 <div class="flex flex-col w-full px-[16px] py-[20px]">
-                                    <button class="text-[#2E3034] border border-[#2C8DC7] w-full h-[45px] rounded-[12px] font-semibold bg-white">Yalnız bir istiqamətdə</button>
+                                    <button id="oneWayBtn" class="text-[#2E3034] border border-[#2C8DC7] w-full h-[45px] rounded-[12px] font-semibold bg-white opacity-50 cursor-not-allowed" disabled>Yalnız bir istiqamətdə</button>
                                     <div class="flex mt-[16px] gap-[16px]">
                                         <div id="el1" class="pointer flex-1 w-full form-control"></div>
                                         <div id="el2" class="pointer flex-1 w-full form-control"></div>
@@ -174,11 +180,65 @@
                             
                         </div>
                         <div>
-                            <button class="relative flex flex-col w-[158px] h-[64px] px-[16px] py-[10px] text-left bg-white border border-[#DBE0E4]">
+                            <button id="passengerBtn" class="relative flex flex-col w-[158px] h-[64px] px-[16px] py-[10px] text-left bg-white border border-[#DBE0E4]">
                                 <span class="text-[13px] leading-[20px] text-[#6E7583]">Sərnişinlər</span>
-                                <span class="text-[18px] font-semibold leading-[24px] text-[#2E3034]">1,Ekonom</span>
-                                <svg width="14" height="8" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" class="absolute top-[26px] right-[16px] rotate-180"><path d="M1 7L7 1L13 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+                                <span id="passengerCount" class="text-[18px] font-semibold leading-[24px] text-[#2E3034]">1, Ekonom</span>
+                                <svg width="14" height="8" id="angle" viewBox="0 0 14 8" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" class="absolute top-[26px] right-[16px] rotate-180"><path d="M1 7L7 1L13 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
                             </button>
+                            <div id="passengerMenu" class="absolute hidden bg-white shadow-2xl border border-[#DBE0E4] w-[330px] right-0 p-[20px] rounded-[12px] mt-2 top-[70px]">
+                                <div class="mb-4">
+                                    <div class="flex justify-between items-center py-[8px] border-b">
+                                        <div class="flex flex-col">
+                                            <div>Böyüklər</div>
+                                            <div class="text-[#6E7583] text-[13px]">12+ yaş</div> 
+                                        </div>
+                                        <div class="flex items-center gap-[8px]">
+                                            <button class="decrease inline-flex justify-center items-center size-[40px] bg-[#F5F6F8] border border-[#CDD5DF] rounded-full">
+                                                <i class="fa fa-minus text-[20px]"></i>
+                                            </button>
+                                            <div class="count text-[18px] font-semibold w-[25px] text-center">1</div>
+                                            <button class="increase inline-flex justify-center items-center size-[40px] bg-[#F5F6F8] border border-[#CDD5DF] rounded-full">
+                                                <i class="fa fa-plus text-[20px]"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-center py-[8px] border-b">
+                                        <div class="flex flex-col">
+                                            <div>Uşaqlar</div>
+                                            <div class="text-[#6E7583] text-[13px]">2-12 yaş</div> 
+                                        </div>
+                                        <div class="flex items-center gap-[8px]">
+                                            <button class="decrease inline-flex justify-center items-center size-[40px] bg-[#F5F6F8] border border-[#CDD5DF] rounded-full">
+                                                <i class="fa fa-minus text-[20px]"></i>
+                                            </button>
+                                            <div class="count text-[18px] font-semibold w-[25px] text-center">0</div>
+                                            <button class="increase inline-flex justify-center items-center size-[40px] bg-[#F5F6F8] border border-[#CDD5DF] rounded-full">
+                                                <i class="fa fa-plus text-[20px]"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="flex justify-between items-center py-[8px] border-b">
+                                        <div class="flex flex-col">
+                                            <div>Körpələr</div>
+                                            <div class="text-[#6E7583] text-[13px]">0-2 yaş</div> 
+                                        </div>
+                                        <div class="flex items-center gap-[8px]">
+                                            <button class="decrease inline-flex justify-center items-center size-[40px] bg-[#F5F6F8] border border-[#CDD5DF] rounded-full">
+                                                <i class="fa fa-minus text-[20px]"></i>
+                                            </button>
+                                            <div class="count text-[18px] font-semibold w-[25px] text-center">0</div>
+                                            <button class="increase inline-flex justify-center items-center size-[40px] bg-[#F5F6F8] border border-[#CDD5DF] rounded-full">
+                                                <i class="fa fa-plus text-[20px]"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between bg-[#F5F6F8] rounded-[8px] h-[48px] items-center relative">
+                                    <button id="ekonomBtn" class="flex-1 h-full text-[#2C8DC7] font-semibold relative z-10">Ekonom</button>
+                                    <div id="borderLine" class="transition-all absolute w-[50%] rounded-[8px] border-[#2C8DC7] border h-full bg-none"></div>
+                                    <button id="biznesBtn" class="flex-1 rounded-[8px] h-full text-[#2C8DC7] font-semibold relative z-10">Biznes</button>
+                                </div>
+                            </div>
                         </div>
                         <button class="p-[16px] bg-[#01357E] rounded-[0_12px_12px_0]">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="4 4 24.01 24.01" class="size-[24px] shrink-0 text-white"><path d="M13.6667 4C8.33976 4 4 8.33976 4 13.6667C4 18.9936 8.33976 23.3333 13.6667 23.3333C15.9709 23.3333 18.0891 22.5194 19.7526 21.1667L26.293 27.707C26.3851 27.803 26.4955 27.8796 26.6176 27.9324C26.7397 27.9852 26.8712 28.0131 27.0042 28.0144C27.1372 28.0158 27.2692 27.9906 27.3924 27.9403C27.5156 27.89 27.6275 27.8156 27.7216 27.7216C27.8156 27.6275 27.89 27.5156 27.9403 27.3924C27.9906 27.2692 28.0158 27.1372 28.0144 27.0042C28.0131 26.8712 27.9852 26.7397 27.9324 26.6176C27.8796 26.4955 27.803 26.3851 27.707 26.293L21.1667 19.7526C22.5194 18.0891 23.3333 15.9709 23.3333 13.6667C23.3333 8.33976 18.9936 4 13.6667 4ZM13.6667 6C17.9127 6 21.3333 9.42064 21.3333 13.6667C21.3333 15.7351 20.5175 17.6038 19.194 18.9805C19.1124 19.0404 19.0404 19.1124 18.9805 19.194C17.6038 20.5175 15.7351 21.3333 13.6667 21.3333C9.42063 21.3333 6 17.9127 6 13.6667C6 9.42064 9.42063 6 13.6667 6Z" fill="currentColor"></path></svg>

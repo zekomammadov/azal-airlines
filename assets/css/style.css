@@ -56,3 +56,8 @@
     display: block;
 }
 
+
+button svg, button i {
+    pointer-events: none;
+}
+

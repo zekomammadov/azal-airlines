@@ -280,6 +280,65 @@ function inputValueCheck() {
         });
     }
 }
+function setupInputs() {
+    const inputs = document.querySelectorAll('.from');
+    
+    inputs.forEach(input => {
+        const clearBtn = input.parentElement.querySelector('.clear-btn');
+        const label = input.nextElementSibling;
+        const border = input.closest('.labell');
+        
+        function updateInputState() {
+            if (input.value) {
+                label.classList.add('focused');
+                border.style.borderColor = '#37A6DB';
+                clearBtn.classList.remove('hidden');
+            } else {
+                label.classList.remove('focused');
+                border.style.borderColor = '#DBE0E4';
+                clearBtn.classList.add('hidden');
+            }
+        }
+
+        input.addEventListener('input', updateInputState);
+
+        input.addEventListener('focus', () => {
+            border.style.borderColor = '#37A6DB';
+            label.classList.add('focused');
+        });
+
+        input.addEventListener('blur', () => {
+            if (!input.value) {
+                // label.classList.remove('focused');
+                border.style.borderColor = '#DBE0E4';
+            }
+        });
+
+        input.parentElement.addEventListener('mouseenter', () => {
+            if (input.value) {
+                clearBtn.classList.remove('hidden');
+            }
+        });
+
+        input.parentElement.addEventListener('mouseleave', () => {
+            clearBtn.classList.add('hidden');
+        });
+
+        clearBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            input.value = '';
+            updateInputState();
+            // label.classList.remove('focused');
+            border.style.borderColor = '#DBE0E4';
+        });
+
+        // İlkin vəziyyəti yoxla
+        updateInputState();
+    });
+}
+
+// Funksiyanı çağır
+setupInputs();
 
 function setupChangeButton() {
     const changeBtn = document.getElementById('changeBtn');
@@ -345,15 +404,20 @@ document.addEventListener('DOMContentLoaded', function () {
     const commutingDiv = document.querySelector('.commuting');
     const departureSpan = commutingDiv.querySelector('.departure');
     const landingSpan = commutingDiv.querySelector('.landing');
-    
+    const oneWayBtn = document.getElementById('oneWayBtn');
+    const kalendarDiv = document.querySelector('.kalendar');
+
     const azMonths = [
         "Yanvar", "Fevral", "Mart", "Aprel", "May", "İyun", 
         "İyul", "Avqust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"
     ];
-    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); 
+
     let selectedDates = [];
-    let currentMonths = [6, 7]; // İyul və Avqust 2024 (0-based index)
-    
+    let currentMonths = [6, 7];
+    let isOneWay = false;
+
     monthButtons.forEach((button, index) => {
         button.addEventListener('click', () => {
             updateActiveMonth(index);
@@ -382,7 +446,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     
     function renderCalendar(element, monthIndex) {
-        const date = new Date(2024, monthIndex + 6, 1); // İstifadəçinin təyin etdiyi ayın 1-dən başlayır
+        const date = new Date(2024, monthIndex + 6, 1);
         const year = date.getFullYear();
         const month = date.getMonth();
         const firstDay = new Date(year, month, 1);
@@ -395,7 +459,7 @@ document.addEventListener('DOMContentLoaded', function () {
                  '<th>BE</th><th>ÇA</th><th>Ç</th><th>CA</th><th>C</th><th>Ş</th><th>B</th></tr>';
     
         let day = 1;
-        const firstDayIndex = (firstDay.getDay() + 6) % 7; // Bazar ertəsindən başlamaq üçün
+        const firstDayIndex = (firstDay.getDay() + 6) % 7;
     
         for (let i = 0; i < 6; i++) {
             table += '<tr>';
@@ -407,8 +471,20 @@ document.addEventListener('DOMContentLoaded', function () {
                 } else {
                     const currentDate = new Date(year, month, day);
                     const isSelected = selectedDates.some(d => d.toDateString() === currentDate.toDateString());
-                    table += `<td class="text-[13px] leading-[20px] size-[40px] font-medium cursor-pointer text-center py-[8px] ${isSelected ? 'bg-[#2C8DC7] text-white rounded-[6px]' : ''}" 
-                                  onclick="selectDate(${year}, ${month}, ${day})">${day}</td>`;
+                    const isPastDate = currentDate < today;
+                    
+                    let cellClass = 'text-[13px] leading-[20px] size-[40px] font-medium text-center py-[8px] ';
+                    if (isSelected) {
+                        cellClass += 'bg-[#2C8DC7] text-white rounded-[6px] ';
+                    }
+                    if (isPastDate) {
+                        cellClass += 'text-gray-300 cursor-not-allowed ';
+                    } else {
+                        cellClass += 'cursor-pointer ';
+                    }
+    
+                    table += `<td class="${cellClass}" 
+                                  ${!isPastDate ? `onclick="selectDate(${year}, ${month}, ${day})"` : ''}>${day}</td>`;
                     day++;
                 }
             }
@@ -450,21 +526,48 @@ document.addEventListener('DOMContentLoaded', function () {
             const [departureDate, returnDate] = selectedDates;
             if (departureDate) {
                 departureSpan.textContent = formatDateString(departureDate);
+                oneWayBtn.disabled = false;
+                oneWayBtn.classList.remove('opacity-50', 'cursor-not-allowed');
             }
             if (returnDate) {
-                landingSpan.textContent = formatDateString(returnDate);
+                landingSpan.textContent = isOneWay ? '-' : formatDateString(returnDate);
+            } else {
+                landingSpan.textContent = isOneWay ? '-' : '';
             }
             dateBtn.classList.add('hidden');
             commutingDiv.classList.remove('hidden');
     
-            // "kalendar" klasslı divə 'hidden' klassı əlavə etmək
-            if (selectedDates.length === 2) {
-                const kalendarDiv = document.querySelector('.kalendar');
-                if (kalendarDiv) {
-                    kalendarDiv.classList.add('hidden');
-                }
+            if (selectedDates.length === 2 || isOneWay) {
+                kalendarDiv.classList.add('hidden');
             }
         }
+    }
+    window.selectDate = function(year, month, day) {
+        const selectedDate = new Date(year, month, day);
+        
+        // Keçmiş tarixlərin seçilməsini əngəlləyirik
+        if (selectedDate < today) {
+            return;
+        }
+    
+        const index = selectedDates.findIndex(d => d.toDateString() === selectedDate.toDateString());
+        
+        if (index > -1) {
+            selectedDates.splice(index, 1);
+        } else {
+            if (isOneWay) {
+                selectedDates = [selectedDate];
+            } else if (selectedDates.length < 2) {
+                selectedDates.push(selectedDate);
+            } else {
+                selectedDates.shift();
+                selectedDates.push(selectedDate);
+            }
+        }
+    
+        selectedDates.sort((a, b) => a - b);
+        updateSelectedDates();
+        renderCalendars(currentMonths[0], currentMonths[1]);
     }
     
     function formatDateString(date) {
@@ -472,6 +575,24 @@ document.addEventListener('DOMContentLoaded', function () {
         const month = azMonths[date.getMonth()];
         return `${day} ${month}`;
     }
+
+
+    oneWayBtn.addEventListener('click', function() {
+        isOneWay = true;
+        selectedDates = selectedDates.slice(0, 1);
+        updateSelectedDates();
+        kalendarDiv.classList.add('hidden');
+    });
+    
+    commutingDiv.addEventListener('click', function(event) {
+        const clickedElement = event.target.closest('button');
+        if (clickedElement) {
+            kalendarDiv.classList.remove('hidden');
+            if (clickedElement.querySelector('.landing')) {
+                isOneWay = false;
+            }
+        }
+    });
     
     // İlk renderi başlat
     updateActiveMonth(0);
@@ -483,4 +604,58 @@ document.addEventListener('DOMContentLoaded', function () {
 
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+    const passengerBtn = document.getElementById('passengerBtn');
+    const passengerMenu = document.getElementById('passengerMenu');
+    const passengerCount = document.getElementById('passengerCount');
+    const ekonomBtn = document.getElementById('ekonomBtn');
+    const biznesBtn = document.getElementById('biznesBtn');
+    const borderLine = document.getElementById('borderLine');
+    const angle = document.getElementById('angle');
 
+    passengerBtn.addEventListener('click', function() {
+        passengerMenu.classList.toggle('hidden');
+        angle.classList.toggle('rotate-180');
+    });
+
+    passengerMenu.addEventListener('click', function(e) {
+        // Klik edilə bilən elementin tipləri
+        if (e.target.classList.contains('increase') || e.target.classList.contains('decrease')) {
+            let countEl;
+            if (e.target.classList.contains('increase')) {
+                countEl = e.target.previousElementSibling;
+                countEl.textContent = parseInt(countEl.textContent) + 1;
+            } else if (e.target.classList.contains('decrease')) {
+                countEl = e.target.nextElementSibling;
+                if (parseInt(countEl.textContent) > 0) {
+                    countEl.textContent = parseInt(countEl.textContent) - 1;
+                }
+            }
+            updatePassengerCount();
+        }
+    }); 
+
+    ekonomBtn.addEventListener('click', function() {
+        borderLine.style.transform = 'translate(0 , 0)';
+        ekonomBtn.classList.toggle('ekonom')
+        // ekonomBtn.classList.add('border', 'border-[#2C8DC7]','text-[#2C8DC7]');
+        // ekonomBtn.classList.remove('', '', '');
+        // biznesBtn.classList.remove('bg-blue-500', 'text-white');
+        // biznesBtn.classList.remove('border', 'border-[#2C8DC7]','text-[#2C8DC7]');
+        updatePassengerCount();
+    });
+    
+    biznesBtn.addEventListener('click', function() {
+        borderLine.style.transform = 'translate(100% , 0)'
+        ekonomBtn.classList.toggle('ekonom')
+        // ekonomBtn.classList.remove('border', 'border-[#2C8DC7]','text-[#2C8DC7]');
+        // biznesBtn.classList.add('border', 'border-[#2C8DC7]','text-[#2C8DC7]');
+        updatePassengerCount();
+    });
+
+    function updatePassengerCount() {
+        let total = Array.from(passengerMenu.querySelectorAll('.count')).reduce((sum, el) => sum + parseInt(el.textContent), 0);
+        let classType = ekonomBtn.classList.contains('ekonom') ? 'Biznes' : 'Ekonom';
+        passengerCount.textContent = `${total}, ${classType}`;
+    }
+});
