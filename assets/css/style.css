@@ -1,69 +1,81 @@
-.logo img, button img {
-    filter: brightness(0) invert(1);
+.logo img,
+button img {
+  filter: brightness(0) invert(1);
 }
 
 /* .label {
     transition: all ease .4s;
 } */
 .label {
-    transition: transform 0.2s ease-in-out;
+  transition: transform 0.2s ease-in-out;
 }
 
 .focused {
-    transform: translateY(-10px) scale(0.75);
+  transform: translateY(-10px) scale(0.75);
 }
 
 .tab {
-    background-color: #10101033; /* Default background color */
+  background-color: #10101033; /* Default background color */
 }
 
 .tab.active {
-    background-color: white; /* Active background color */
-    color: #01357E; /* Active text color */
+  background-color: white; /* Active background color */
+  color: #01357e; /* Active text color */
 }
-
-
 
 .labell {
-    position: relative;
-    transition: border-color 0.2s ease-in-out;
+  position: relative;
+  transition: border-color 0.2s ease-in-out;
 }
 
-
 .dropdown {
-    display: none;
+  display: none;
 }
 
 .dropdown.show {
-    display: block;
+  display: block;
 }
 
 .option {
-    /* padding: 8px 16px; */
-    cursor: pointer;
+  /* padding: 8px 16px; */
+  cursor: pointer;
 }
 
 .option:hover {
-    background-color: #f1f1f1;
+  background-color: #f1f1f1;
 }
-
-
 
 .line {
-    display: none;
+  display: none;
 }
 .active .line {
-    display: block;
+  display: block;
 }
 
-
-button svg, button i {
-    pointer-events: none;
+button svg,
+button i {
+  pointer-events: none;
 }
 
 .tab-content {
-    display: none;
+  display: none;
 }
 .tab-content.active {
-    display: flex;
+  display: flex;
+}
+#checks + span::after {
+  transform: translate(0);
+  transition: all ease 0.4s;
+}
+#checks:checked + span::after {
+  transform: translate(100%);
+  transition: all ease 0.4s;
+}
+#checks:checked + span span:nth-child(2) {
+  color: #2c8dc7;
+  transition: all ease 0.4s;
+}
+#checks:checked + span span:nth-child(1) {
+  color: #000;
+  transition: all ease 0.4s;
 }
