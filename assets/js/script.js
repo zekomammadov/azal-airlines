@@ -8,7 +8,11 @@ const usefulLink = document.querySelectorAll('#useful')
 const moreBtn = document.querySelectorAll('.moreBtn')
 const usefulHead = document.querySelectorAll('.h2')
 const labels = document.querySelectorAll('.label')
-const tabs = document.querySelectorAll('.tabs button')
+
+const tabLinks = document.querySelectorAll(".tab-link");
+const tabContents = document.querySelectorAll(".tab-content");
+
+// const tabs = document.querySelectorAll('.tabs button')
 const dateBtn = document.querySelector('#dateBtn')
 
 const destinations =[
@@ -127,16 +131,17 @@ const destinations =[
 
 
 function tabsChange() {
-    const tabs = document.querySelectorAll('.tab');
+    tabLinks.forEach(link => {
+        link.addEventListener("click", function () {
+            const tabId = this.getAttribute("data-tab");
 
-    for (let tab of tabs) {
-        tab.addEventListener('click', function () {
-            for (t of tabs) {
-                t.classList.remove('active');
-            }
-            tab.classList.add('active');
-        })
-    }
+            tabLinks.forEach(link => link.classList.remove("active"));
+            tabContents.forEach(content => content.classList.remove("active"));
+
+            this.classList.add("active");
+            document.getElementById(tabId).classList.add("active");
+        });
+    });
 }
 tabsChange();
 
@@ -231,6 +236,27 @@ function filterOptions(input, dropdown) {
 }
 function inputValueCheck() {
     const inputs = document.querySelectorAll('.from');
+    const reserveInput = document.querySelectorAll('.reserve');
+    
+    for (let res of reserveInput) {
+        const label = res.nextElementSibling;
+        const border = res.closest('.labell');
+        res.addEventListener('focus', function () {
+            label.classList.add('focused');
+            border.style.borderColor = '#37A6DB';
+            dropdown.classList.add('show');
+        });
+        res.addEventListener('blur', function () {
+            setTimeout(() => {
+                if (res.value === '') {
+                    label.classList.remove('focused');
+                    border.style.borderColor = '#C52F5C';
+                } else {
+                    border.style.borderColor = '#DBE0E4'; // Default boz rəng
+                }
+            }, 200); // Bu gecikmə, dropdown seçimlərindəki klik hadisəsinin qeydiyyata alınmasına imkan verir
+        });
+    }
     
     for (let input of inputs) {
         const label = input.nextElementSibling;
@@ -279,6 +305,7 @@ function inputValueCheck() {
             });
         });
     }
+    
 }
 function setupInputs() {
     const inputs = document.querySelectorAll('.from');
@@ -500,27 +527,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const month = azMonths[date.getMonth()];
         return `${day} ${month}`;
     }
-    
-    window.selectDate = function(year, month, day) {
-        const selectedDate = new Date(year, month, day);
-        const index = selectedDates.findIndex(d => d.toDateString() === selectedDate.toDateString());
-        
-        if (index > -1) {
-            selectedDates.splice(index, 1);
-        } else {
-            if (selectedDates.length < 2) {
-                selectedDates.push(selectedDate);
-            } else {
-                selectedDates.shift();
-                selectedDates.push(selectedDate);
-            }
-        }
-    
-        selectedDates.sort((a, b) => a - b);
-        updateSelectedDates();
-        renderCalendars(currentMonths[0], currentMonths[1]);
-    }
-    
+     
     function updateSelectedDates() {
         if (selectedDates.length > 0) {
             const [departureDate, returnDate] = selectedDates;
@@ -542,6 +549,7 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         }
     }
+
     window.selectDate = function(year, month, day) {
         const selectedDate = new Date(year, month, day);
         
@@ -638,18 +646,12 @@ document.addEventListener('DOMContentLoaded', function() {
     ekonomBtn.addEventListener('click', function() {
         borderLine.style.transform = 'translate(0 , 0)';
         ekonomBtn.classList.toggle('ekonom')
-        // ekonomBtn.classList.add('border', 'border-[#2C8DC7]','text-[#2C8DC7]');
-        // ekonomBtn.classList.remove('', '', '');
-        // biznesBtn.classList.remove('bg-blue-500', 'text-white');
-        // biznesBtn.classList.remove('border', 'border-[#2C8DC7]','text-[#2C8DC7]');
         updatePassengerCount();
     });
     
     biznesBtn.addEventListener('click', function() {
         borderLine.style.transform = 'translate(100% , 0)'
         ekonomBtn.classList.toggle('ekonom')
-        // ekonomBtn.classList.remove('border', 'border-[#2C8DC7]','text-[#2C8DC7]');
-        // biznesBtn.classList.add('border', 'border-[#2C8DC7]','text-[#2C8DC7]');
         updatePassengerCount();
     });
 
