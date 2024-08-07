@@ -15,8 +15,7 @@ const tabContents = document.querySelectorAll(".tab-content");
 // const tabs = document.querySelectorAll('.tabs button')
 const dateBtn = document.querySelector('#dateBtn')
 
-const destinations =[
-    {
+const destinations = [{
         city: "Bakı",
         country: "Azərbaycan",
         code: "GYD"
@@ -132,7 +131,7 @@ const destinations =[
 
 function tabsChange() {
     tabLinks.forEach(link => {
-        link.addEventListener("click", function () {
+        link.addEventListener("click", function() {
             const tabId = this.getAttribute("data-tab");
 
             tabLinks.forEach(link => link.classList.remove("active"));
@@ -145,7 +144,7 @@ function tabsChange() {
 }
 tabsChange();
 
-nightBtn.addEventListener('click', function () {
+nightBtn.addEventListener('click', function() {
     if (light.src.includes('light')) {
         nightMode();
     } else {
@@ -205,13 +204,13 @@ function defaultMode() {
 
 function filterOptions(input, dropdown) {
     const value = input.value.toLowerCase();
-    const filteredDestinations = destinations.filter(destination => 
-        destination.city.toLowerCase().includes(value) || 
+    const filteredDestinations = destinations.filter(destination =>
+        destination.city.toLowerCase().includes(value) ||
         destination.code.toLowerCase().includes(value)
     );
-    
+
     dropdown.innerHTML = "";
-    
+
     filteredDestinations.forEach(destination => {
         const option = document.createElement('div');
         option.className = 'option cursor-pointer hover:bg-[#eeeeee80]';
@@ -234,19 +233,20 @@ function filterOptions(input, dropdown) {
         });
     });
 }
+
 function inputValueCheck() {
     const inputs = document.querySelectorAll('.from');
     const reserveInput = document.querySelectorAll('.reserve');
-    
+
     for (let res of reserveInput) {
         const label = res.nextElementSibling;
         const border = res.closest('.labell');
-        res.addEventListener('focus', function () {
+        res.addEventListener('focus', function() {
             label.classList.add('focused');
             border.style.borderColor = '#37A6DB';
             dropdown.classList.add('show');
         });
-        res.addEventListener('blur', function () {
+        res.addEventListener('blur', function() {
             setTimeout(() => {
                 if (res.value === '') {
                     label.classList.remove('focused');
@@ -257,20 +257,20 @@ function inputValueCheck() {
             }, 200); // Bu gecikmə, dropdown seçimlərindəki klik hadisəsinin qeydiyyata alınmasına imkan verir
         });
     }
-    
+
     for (let input of inputs) {
         const label = input.nextElementSibling;
         const border = input.closest('.labell');
         const dropdown = input.closest('.labell').nextElementSibling;
 
-        input.addEventListener('focus', function () {
+        input.addEventListener('focus', function() {
             label.classList.add('focused');
             border.style.borderColor = '#37A6DB';
             dropdown.classList.add('show');
             filterOptions(input, dropdown); // İlk dəfə göstərmək üçün
         });
 
-        input.addEventListener('blur', function () {
+        input.addEventListener('blur', function() {
             setTimeout(() => {
                 dropdown.classList.remove('show');
                 if (input.value === '') {
@@ -282,7 +282,7 @@ function inputValueCheck() {
             }, 200); // Bu gecikmə, dropdown seçimlərindəki klik hadisəsinin qeydiyyata alınmasına imkan verir
         });
 
-        input.addEventListener('input', function (event) {
+        input.addEventListener('input', function(event) {
             const value = event.target.value;
 
             if (value !== '') {
@@ -298,23 +298,24 @@ function inputValueCheck() {
         });
 
         dropdown.querySelectorAll('.option button').forEach(button => {
-            button.addEventListener('click', function () {
+            button.addEventListener('click', function() {
                 const countryName = this.querySelector('.flex-1').textContent;
                 input.value = countryName;
                 dropdown.classList.remove('show');
             });
         });
     }
-    
+
 }
+
 function setupInputs() {
     const inputs = document.querySelectorAll('.from');
-    
+
     inputs.forEach(input => {
         const clearBtn = input.parentElement.querySelector('.clear-btn');
         const label = input.nextElementSibling;
         const border = input.closest('.labell');
-        
+
         function updateInputState() {
             if (input.value) {
                 label.classList.add('focused');
@@ -371,7 +372,7 @@ function setupChangeButton() {
     const changeBtn = document.getElementById('changeBtn');
     const inputs = document.querySelectorAll('.from');
 
-    changeBtn.addEventListener('click', function () {
+    changeBtn.addEventListener('click', function() {
         if (inputs[0].value !== '' && inputs[1].value !== '') {
             const tempValue = inputs[0].value;
             inputs[0].value = inputs[1].value;
@@ -380,137 +381,137 @@ function setupChangeButton() {
     });
 }
 
-dateBtn.addEventListener('click', function () {
+dateBtn.addEventListener('click', function() {
     const nextDiv = dateBtn.nextElementSibling.nextElementSibling;;
     nextDiv.classList.toggle('hidden')
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    inputValueCheck();
-    setupChangeButton();
+document.addEventListener('DOMContentLoaded', function() {
+            inputValueCheck();
+            setupChangeButton();
 
-    const buttons = document.querySelectorAll('#monthBtn button');
+            const buttons = document.querySelectorAll('#monthBtn button');
 
-    buttons.forEach((button, index) => {
-        button.addEventListener('click', () => {
-            buttons.forEach(btn => {
-                btn.classList.remove('text-[#2C8DC7]', 'font-semibold', 'active');
-                btn.classList.add('text-black');
-                if (btn.querySelector('.line')) {
-                    btn.querySelector('.line').remove();
-                }
+            buttons.forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    buttons.forEach(btn => {
+                        btn.classList.remove('text-[#2C8DC7]', 'font-semibold', 'active');
+                        btn.classList.add('text-black');
+                        if (btn.querySelector('.line')) {
+                            btn.querySelector('.line').remove();
+                        }
+                    });
+
+                    button.classList.add('text-[#2C8DC7]', 'font-semibold', 'active');
+                    button.classList.remove('text-black');
+                    if (!button.querySelector('.line')) {
+                        const lineDiv = document.createElement('div');
+                        lineDiv.className = 'line absolute w-[4px] h-[52px] bg-[#2C8DC7] left-0';
+                        button.prepend(lineDiv);
+                    }
+
+                    if (index + 1 < buttons.length) {
+                        const nextButton = buttons[index + 1];
+                        nextButton.classList.add('text-[#2C8DC7]', 'font-semibold', 'active');
+                        nextButton.classList.remove('text-black');
+                        if (!nextButton.querySelector('.line')) {
+                            const lineDiv = document.createElement('div');
+                            lineDiv.className = 'line absolute w-[4px] h-[32px] bg-[#2C8DC7] left-0';
+                            nextButton.prepend(lineDiv);
+                        }
+                    }
+                });
             });
 
-            button.classList.add('text-[#2C8DC7]', 'font-semibold', 'active');
-            button.classList.remove('text-black');
-            if (!button.querySelector('.line')) {
-                const lineDiv = document.createElement('div');
-                lineDiv.className = 'line absolute w-[4px] h-[52px] bg-[#2C8DC7] left-0';
-                button.prepend(lineDiv);
-            }
-
-            if (index + 1 < buttons.length) {
-                const nextButton = buttons[index + 1];
-                nextButton.classList.add('text-[#2C8DC7]', 'font-semibold', 'active');
-                nextButton.classList.remove('text-black');
-                if (!nextButton.querySelector('.line')) {
-                    const lineDiv = document.createElement('div');
-                    lineDiv.className = 'line absolute w-[4px] h-[32px] bg-[#2C8DC7] left-0';
-                    nextButton.prepend(lineDiv);
-                }
-            }
-        });
-    });
 
 
+            const monthButtons = document.querySelectorAll('#monthBtn button');
+            const el1 = document.getElementById('el1');
+            const el2 = document.getElementById('el2');
+            const dateBtn = document.getElementById('dateBtn');
+            const commutingDiv = document.querySelector('.commuting');
+            const departureSpan = commutingDiv.querySelector('.departure');
+            const landingSpan = commutingDiv.querySelector('.landing');
+            const oneWayBtn = document.getElementById('oneWayBtn');
+            const kalendarDiv = document.querySelector('.kalendar');
 
-    const monthButtons = document.querySelectorAll('#monthBtn button');
-    const el1 = document.getElementById('el1');
-    const el2 = document.getElementById('el2');
-    const dateBtn = document.getElementById('dateBtn');
-    const commutingDiv = document.querySelector('.commuting');
-    const departureSpan = commutingDiv.querySelector('.departure');
-    const landingSpan = commutingDiv.querySelector('.landing');
-    const oneWayBtn = document.getElementById('oneWayBtn');
-    const kalendarDiv = document.querySelector('.kalendar');
+            const azMonths = [
+                "Yanvar", "Fevral", "Mart", "Aprel", "May", "İyun",
+                "İyul", "Avqust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"
+            ];
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
 
-    const azMonths = [
-        "Yanvar", "Fevral", "Mart", "Aprel", "May", "İyun", 
-        "İyul", "Avqust", "Sentyabr", "Oktyabr", "Noyabr", "Dekabr"
-    ];
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); 
+            let selectedDates = [];
+            let currentMonths = [6, 7];
+            let isOneWay = false;
 
-    let selectedDates = [];
-    let currentMonths = [6, 7];
-    let isOneWay = false;
+            monthButtons.forEach((button, index) => {
+                button.addEventListener('click', () => {
+                    updateActiveMonth(index);
+                    renderCalendars(index, index + 1);
+                });
+            });
 
-    monthButtons.forEach((button, index) => {
-        button.addEventListener('click', () => {
-            updateActiveMonth(index);
-            renderCalendars(index, index + 1);
-        });
-    });
-    
-    function updateActiveMonth(index) {
-        monthButtons.forEach((btn, i) => {
-            btn.classList.toggle('active', i === index);
-            if (i === index) {
-                const line = document.createElement('div');
-                line.className = 'line absolute w-[4px] h-[52px] bg-[#2C8DC7] left-0';
-                btn.appendChild(line);
-            } else {
-                const line = btn.querySelector('.line');
-                if (line) line.remove();
-            }
-        });
-    }
-    
-    function renderCalendars(month1 = 0, month2 = 1) {
-        currentMonths = [month1, month2];
-        renderCalendar(el1, month1);
-        renderCalendar(el2, month2);
-    }
-    
-    function renderCalendar(element, monthIndex) {
-        const date = new Date(2024, monthIndex + 6, 1);
-        const year = date.getFullYear();
-        const month = date.getMonth();
-        const firstDay = new Date(year, month, 1);
-        const lastDay = new Date(year, month + 1, 0);
-    
-        let table = '<table class="w-full">';
-        table += '<tr><th colspan="7" class="text-[16px] font-bold py-[16px]">' + 
-                 azMonths[month] + ' ' + year + '</th></tr>';
-        table += '<tr class="text-[14px] font-medium text-[#9CA3AF]">' +
-                 '<th>BE</th><th>ÇA</th><th>Ç</th><th>CA</th><th>C</th><th>Ş</th><th>B</th></tr>';
-    
-        let day = 1;
-        const firstDayIndex = (firstDay.getDay() + 6) % 7;
-    
-        for (let i = 0; i < 6; i++) {
-            table += '<tr>';
-            for (let j = 0; j < 7; j++) {
-                if (i === 0 && j < firstDayIndex) {
-                    table += '<td></td>';
-                } else if (day > lastDay.getDate()) {
-                    table += '<td></td>';
-                } else {
-                    const currentDate = new Date(year, month, day);
-                    const isSelected = selectedDates.some(d => d.toDateString() === currentDate.toDateString());
-                    const isPastDate = currentDate < today;
-                    
-                    let cellClass = 'text-[13px] leading-[20px] size-[40px] font-medium text-center py-[8px] ';
-                    if (isSelected) {
-                        cellClass += 'bg-[#2C8DC7] text-white rounded-[6px] ';
-                    }
-                    if (isPastDate) {
-                        cellClass += 'text-gray-300 cursor-not-allowed ';
+            function updateActiveMonth(index) {
+                monthButtons.forEach((btn, i) => {
+                    btn.classList.toggle('active', i === index);
+                    if (i === index) {
+                        const line = document.createElement('div');
+                        line.className = 'line absolute w-[4px] h-[52px] bg-[#2C8DC7] left-0';
+                        btn.appendChild(line);
                     } else {
-                        cellClass += 'cursor-pointer ';
+                        const line = btn.querySelector('.line');
+                        if (line) line.remove();
                     }
-    
-                    table += `<td class="${cellClass}" 
+                });
+            }
+
+            function renderCalendars(month1 = 0, month2 = 1) {
+                currentMonths = [month1, month2];
+                renderCalendar(el1, month1);
+                renderCalendar(el2, month2);
+            }
+
+            function renderCalendar(element, monthIndex) {
+                const date = new Date(2024, monthIndex + 6, 1);
+                const year = date.getFullYear();
+                const month = date.getMonth();
+                const firstDay = new Date(year, month, 1);
+                const lastDay = new Date(year, month + 1, 0);
+
+                let table = '<table class="w-full">';
+                table += '<tr><th colspan="7" class="text-[16px] font-bold py-[16px]">' +
+                    azMonths[month] + ' ' + year + '</th></tr>';
+                table += '<tr class="text-[14px] font-medium text-[#9CA3AF]">' +
+                    '<th>BE</th><th>ÇA</th><th>Ç</th><th>CA</th><th>C</th><th>Ş</th><th>B</th></tr>';
+
+                let day = 1;
+                const firstDayIndex = (firstDay.getDay() + 6) % 7;
+
+                for (let i = 0; i < 6; i++) {
+                    table += '<tr>';
+                    for (let j = 0; j < 7; j++) {
+                        if (i === 0 && j < firstDayIndex) {
+                            table += '<td></td>';
+                        } else if (day > lastDay.getDate()) {
+                            table += '<td></td>';
+                        } else {
+                            const currentDate = new Date(year, month, day);
+                            const isSelected = selectedDates.some(d => d.toDateString() === currentDate.toDateString());
+                            const isPastDate = currentDate < today;
+
+                            let cellClass = 'text-[13px] leading-[20px] size-[40px] font-medium text-center py-[8px] ';
+                            if (isSelected) {
+                                cellClass += 'bg-[#2C8DC7] text-white rounded-[6px] ';
+                            }
+                            if (isPastDate) {
+                                cellClass += 'text-gray-300 cursor-not-allowed ';
+                            } else {
+                                cellClass += 'cursor-pointer ';
+                            }
+
+                            table += `<td class="${cellClass}" 
                                   ${!isPastDate ? `onclick="selectDate(${year}, ${month}, ${day})"` : ''}>${day}</td>`;
                     day++;
                 }
@@ -660,4 +661,20 @@ document.addEventListener('DOMContentLoaded', function() {
         let classType = ekonomBtn.classList.contains('ekonom') ? 'Biznes' : 'Ekonom';
         passengerCount.textContent = `${total}, ${classType}`;
     }
+
+
+    const checkbox = document.getElementById('checks');
+    const reservationInput = document.querySelector('.checkedInput');
+    const reservationLabel = document.querySelector('.checkedChange');
+
+    checkbox.addEventListener('change', function() {
+        if (this.checked) {
+            reservationLabel.textContent = 'Bilet nömrəsi *';
+        } else {
+            reservationLabel.textContent = 'Rezervasiya nömrəsi (6 simvol) *';
+        }
+        reservationInput.value = '';
+        setupInputs();
+    });
+
 });
