@@ -1,3 +1,4 @@
+const logo = document.getElementById('logo')
 const nightBtn = document.getElementById('night')
 const light = document.querySelector('.light')
 const body = document.querySelector('body')
@@ -156,6 +157,7 @@ function nightMode() {
     light.src = 'assets/img/moon.svg'
     body.classList.add('bg-black')
     footer.classList.remove('bg-[#01357e]')
+    logo.style.filter = 'brightness(0) invert(1)'
     for (let btn of socialBtn) {
         btn.classList.replace('bg-white', 'bg-[#1f2022]')
         btn.classList.replace('text-[#01357e]', 'text-white')
@@ -182,6 +184,7 @@ function defaultMode() {
     light.src = 'assets/img/light.svg'
     body.classList.remove('bg-black')
     footer.classList.add('bg-[#01357e]')
+    logo.style.filter = 'none'
     for (let btn of socialBtn) {
         btn.classList.replace('bg-[#1f2022]', 'bg-white')
         btn.classList.replace('text-white', 'text-[#01357e]')
@@ -522,13 +525,13 @@ document.addEventListener('DOMContentLoaded', function() {
         table += '</table>';
         element.innerHTML = table;
     }
-    
+
     function formatDateString(date) {
         const day = date.getDate();
         const month = azMonths[date.getMonth()];
         return `${day} ${month}`;
     }
-     
+
     function updateSelectedDates() {
         if (selectedDates.length > 0) {
             const [departureDate, returnDate] = selectedDates;
@@ -544,23 +547,23 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             dateBtn.classList.add('hidden');
             commutingDiv.classList.remove('hidden');
-    
+
             if (selectedDates.length === 2 || isOneWay) {
                 kalendarDiv.classList.add('hidden');
             }
         }
     }
 
-    window.selectDate = function(year, month, day) {
+    window.selectDate = function (year, month, day) {
         const selectedDate = new Date(year, month, day);
-        
+
         // Keçmiş tarixlərin seçilməsini əngəlləyirik
         if (selectedDate < today) {
             return;
         }
-    
+
         const index = selectedDates.findIndex(d => d.toDateString() === selectedDate.toDateString());
-        
+
         if (index > -1) {
             selectedDates.splice(index, 1);
         } else {
@@ -573,12 +576,12 @@ document.addEventListener('DOMContentLoaded', function() {
                 selectedDates.push(selectedDate);
             }
         }
-    
+
         selectedDates.sort((a, b) => a - b);
         updateSelectedDates();
         renderCalendars(currentMonths[0], currentMonths[1]);
     }
-    
+
     function formatDateString(date) {
         const day = date.getDate();
         const month = azMonths[date.getMonth()];
@@ -586,14 +589,14 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
 
-    oneWayBtn.addEventListener('click', function() {
+    oneWayBtn.addEventListener('click', function () {
         isOneWay = true;
         selectedDates = selectedDates.slice(0, 1);
         updateSelectedDates();
         kalendarDiv.classList.add('hidden');
     });
-    
-    commutingDiv.addEventListener('click', function(event) {
+
+    commutingDiv.addEventListener('click', function (event) {
         const clickedElement = event.target.closest('button');
         if (clickedElement) {
             kalendarDiv.classList.remove('hidden');
@@ -602,18 +605,18 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
     });
-    
+
     // İlk renderi başlat
     updateActiveMonth(0);
     renderCalendars();
-    
 
 
-    
+
+
 
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const passengerBtn = document.getElementById('passengerBtn');
     const passengerMenu = document.getElementById('passengerMenu');
     const passengerCount = document.getElementById('passengerCount');
@@ -622,12 +625,12 @@ document.addEventListener('DOMContentLoaded', function() {
     const borderLine = document.getElementById('borderLine');
     const angle = document.getElementById('angle');
 
-    passengerBtn.addEventListener('click', function() {
+    passengerBtn.addEventListener('click', function () {
         passengerMenu.classList.toggle('hidden');
         angle.classList.toggle('rotate-180');
     });
 
-    passengerMenu.addEventListener('click', function(e) {
+    passengerMenu.addEventListener('click', function (e) {
         // Klik edilə bilən elementin tipləri
         if (e.target.classList.contains('increase') || e.target.classList.contains('decrease')) {
             let countEl;
@@ -642,15 +645,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             updatePassengerCount();
         }
-    }); 
+    });
 
-    ekonomBtn.addEventListener('click', function() {
+    ekonomBtn.addEventListener('click', function () {
         borderLine.style.transform = 'translate(0 , 0)';
         ekonomBtn.classList.toggle('ekonom')
         updatePassengerCount();
     });
-    
-    biznesBtn.addEventListener('click', function() {
+
+    biznesBtn.addEventListener('click', function () {
         borderLine.style.transform = 'translate(100% , 0)'
         ekonomBtn.classList.toggle('ekonom')
         updatePassengerCount();
@@ -667,7 +670,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const reservationInput = document.querySelector('.checkedInput');
     const reservationLabel = document.querySelector('.checkedChange');
 
-    checkbox.addEventListener('change', function() {
+    checkbox.addEventListener('change', function () {
         if (this.checked) {
             reservationLabel.textContent = 'Bilet nömrəsi *';
         } else {

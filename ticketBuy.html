@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Azal Airlines</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/air-datepicker.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#EDF1F4]">
+
+
+    <header>
+        <nav class="flex h-[112px] p-[32px] items-center justify-between">
+            <div class="logo">
+                <a href="#">
+                    <img src="assets/img/logo.svg" class="z-10 " id="logo" alt="">
+                </a>
+            </div>
+            <div class="flex items-center gap-[16px]">
+                <button id="night" class="p-[12px] rounded-full bg-[#ffffff1a] size-[48px] inline-flex items-center justify-center transition-all duration-200 hover:bg-[#40b7de] ">
+                    <img class="light" src="assets/img/light.svg" alt="">
+                </button>
+                <button class=" text-white p-[12px] rounded-[12px] bg-[#ffffff1a] h-[48px] inline-flex items-center gap-[8px] transition-all duration-200 hover:bg-[#40b7de] ">
+                    <img src="assets/img/globe.svg" class="size-[20px]" alt="">
+                    <span class="text-[14px]">Azərbaycan</span>
+                </button>
+                <button class=" text-white p-[12px] rounded-[12px] bg-[#ffffff1a] h-[48px] inline-flex items-center gap-[8px] transition-all duration-200 hover:bg-[#40b7de] ">
+                    <img src="assets/img/user.svg" class="size-[20px]" alt="">
+                    <span class="text-[14px]">Şəxsi Kabinet</span>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+
+        <div class="container mx-auto w-[1160px] my-[32px]">
+            <h2 class="mb-[24px] text-[24px] leading-[32px] text-[#2E3034]">Sərnişin məlumatlarını doldurun</h2>
+            <div class="flex flex-col gap-y-[16px] ">
+                <div class="rounded-[8px] border border-gray-300 overflow-hidden bg-white">
+                    <div class="ticketHead px-[30px] py-[24px] flex w-full bg-[#01357E] gap-[15px]">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" viewBox="0 0 18 18" class="text-white"><path d="M9 0a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm0 11c-3.004 0-9 1.508-9 4.5V17a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-1.5c0-2.992-5.996-4.5-9-4.5Z"></path></svg>
+                        <span class="text-white">Sərnişin</span>
+                    </div>
+
+                    <form action="" class="p-[32px]">
+                        <div class="grid grid-cols-4 gap-x-[50px] gap-y-[24px] justify-between pb-[40px] border-b-2 border-[#DBE0E4]">
+                            <div>
+                                <label for="" class="flex flex-col justify-center">
+                                    <span class="mb-[8px] text-[13px] leading-[20px] text-[#6E7583]">Ad (Latin hərfləri ilə) *</span>
+                                    <input type="text" class="mt-[8px] border border-[#DBE0E4] bg-transparent text-[15px] font-semibold rounded-[8px] outline-none p-[11px_16px] focus:border-[#01357E] focus:transition-all">
+                                </label>
+                            </div>
+                            <div>
+                                <label for="" class="flex flex-col justify-center">
+                                    <span class="mb-[8px] text-[13px] leading-[20px] text-[#6E7583]">Soyad (Latin hərfləri ilə) *</span>
+                                    <input type="text" class="mt-[8px] border border-[#DBE0E4] bg-transparent text-[15px] font-semibold rounded-[8px] outline-none p-[11px_16px] focus:border-[#01357E] focus:transition-all">
+                                </label>
+                            </div>
+                            <div>
+                                <label for="" class="flex flex-col justify-center">
+                                    <span class="mb-[8px] text-[13px] leading-[20px] text-[#6E7583]">Cins *</span>
+                                    <div class="flex items-center mt-[8px]">
+                                        <div class="mr-4">
+                                          <input type="radio" id="male" name="gender" value="male" class="hidden">
+                                          <label for="male" class="inline-flex items-center justify-center p-[10px] size-[48px] text-[15px] border border-[#DBE0E4] rounded-[8px] cursor-pointer [&.active]:border-[#0077B6] [&.active]:text-[#0077B6] radio-label">
+                                            <span class="block border-2 border-transparent px-2 py-1 rounded-full transition-colors radio-span ">
+                                              K
+                                            </span>
+                                          </label>
+                            </div>
+                            <div>
+                                <input type="radio" id="female" name="gender" value="female" class="hidden">
+                                <label for="female" class="inline-flex items-center justify-center p-[10px] size-[48px] text-[15px] border border-[#DBE0E4] rounded-[8px] cursor-pointer radio-label [&.active]:border-[#0077B6] [&.active]:text-[#0077B6]">
+                                            <span class="block border-2 border-transparent px-2 py-1 rounded-full transition-colors radio-span ">
+                                              Q
+                                            </span>
+                                          </label>
+                            </div>
+                        </div>
+                        </label>
+                </div>
+                <div>
+                    <label for="" class="flex flex-col justify-center">
+                                    <span class="mb-[8px] text-[13px] leading-[20px] text-[#6E7583]">Doğulduğu tarix *</span>
+                                    <input type="date" class="mt-[8px] border border-[#DBE0E4] bg-transparent text-[15px] font-semibold rounded-[8px] outline-none p-[11px_16px] focus:border-[#01357E] focus:transition-all">
+                                </label>
+                </div>
+            </div>
+            <div class="mt-[40px]">
+                <h2 class="mb-[24px] text-[24px] leading-[32px] text-[#2E3034]">Sənəd barədə məlumatlar</h2>
+                <div class="grid grid-cols-4 ">
+                    <div>
+                        <label for="">
+                            <span class="mb-[8px] text-[13px] leading-[20px] text-[#6E7583]">Sənəd növü *</span>
+                            <select name="" id="" class="mt-[8px] outline-none border border-[#DBE0E4] p-[10px]">
+                                <option value="">seçilməyib</option>
+                                <option value="">pasport</option>
+                                <option value="">Yeni nəsil biometrik şəxsiyyət vəsiqəsi</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div>
+                        <label for="" class="flex flex-col justify-center">
+                            <span class=" text-[13px] leading-[20px] text-[#6E7583]">Sənəd nömrəsi *</span>
+                            <input type="text" class="mt-[12px] max-w-[160px] border border-[#DBE0E4] bg-transparent text-[15px] font-semibold rounded-[8px] outline-none p-[11px_16px] focus:border-[#01357E] focus:transition-all">
+                        </label>
+                    </div>
+                    <div>
+                        <label for="">
+                            <span class="mb-[8px] text-[13px] leading-[20px] text-[#6E7583]">Sənədi verən ölkənin adı *</span>
+                            <select name="" id="" class="mt-[8px] outline-none border border-[#DBE0E4] p-[10px]">
+                                <option value="" class="flex items-center gap-[5px]" style="background-image:url(https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Flag_of_Azerbaijan.svg/1200px-Flag_of_Azerbaijan.svg.png);"> 
+                                    <span>Azərbaycan</span>
+                                </option>
+                            </select>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+        </div>
+        </div>
+
+
+        <footer class="bg-[#01357e]">
+            <div class="container w-[1160px] mx-auto">
+                <div class="footerHead border-y-2 border-[#ffffff1a] py-[38px] flex justify-center divide-x-2 divide-[#ffffff1a]">
+                    <a href="#" class="border-l-1 inline-flex justify-center items-center max-w-[278px] w-full h-[67px]">
+                        <div class="w-[190px] h-full">
+                            <img src="assets/img/refferans-1.svg" class="size-full" alt="">
+                        </div>
+                    </a>
+                    <a href="#" class="border-l-1 inline-flex justify-center items-center max-w-[278px] w-full h-[67px]">
+                        <div class="w-[190px] h-[36px]">
+                            <img src="assets/img/refferans-2.svg" class="size-full" alt="">
+                        </div>
+                    </a>
+                    <a href="#" class="border-l-1 inline-flex justify-center items-center max-w-[278px] w-full h-[67px]">
+                        <div class="w-[190px] h-[67px]">
+                            <img src="assets/img/refferans-3.svg" class="size-full" alt="">
+                        </div>
+                    </a>
+                    <a href="#" class="border-l-1 inline-flex justify-center items-center max-w-[278px] w-full h-[67px]">
+                        <div class="w-[190px] h-full">
+                            <img src="assets/img/refferans-4.svg" class="size-full" alt="">
+                        </div>
+                    </a>
+
+
+                </div>
+                <div class="footerMain mb-[88px] mt-[24px] flex justify-around">
+                    <div class="">
+                        <div class="text-[18px] text-white">
+                            <h2>Məlumat</h2>
+                        </div>
+                        <div class="mt-[24px] flex flex-col text-white text-[14px]">
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Ümumi məlumat</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Baqaj haqqında məlumat</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Tariflərin qaydaları</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Uşaqlar və hamilə qadınlarla
+                                səyahət</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Heyvanlarla səyahət</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Arzuolunmaz sərnişinlər</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Overbooking</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Təhlükəli əşyalar</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Daşınma qaydaları</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Qiymət siyasəti</a>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="text-[18px] text-white">
+                            <h2>AZAL Miles</h2>
+                        </div>
+                        <div class="mt-[24px] flex flex-col text-white text-[14px]">
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Proqram haqqında</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Balların toplanması və
+                                istifadəsi</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Üzv olmaq</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Profilə daxil olmaq</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Qaydalar və Şərtlər</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">F.A.Q</a>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="text-[18px] text-white">
+                            <h2>AZAL aviaşirkəti</h2>
+                        </div>
+                        <div class="mt-[24px] flex flex-col text-white text-[14px]">
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Haqqımızda</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">AZAL-ın Müşahidə Şurası</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Son xəbərlər</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Bizim donanma</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Karyera</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Məlumat mərkəzi</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Bizə yazın</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Mobil əlavə</a>
+                        </div>
+                    </div>
+                    <div class="">
+                        <div class="text-[18px] text-white">
+                            <h2>Korporativ məlumat</h2>
+                        </div>
+                        <div class="mt-[24px] flex flex-col text-white text-[14px]">
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Qrup şəklində daşımalar</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Satış ofisləri</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Ofis və nümayəndəliklər</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Qəbul günləri</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Mətbuat xidməti</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Struktur bölmələri</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Maliyyə hesabatları</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">Agentlər üçün məlumat</a>
+                            <a class="leading-[24px] opacity-50 hover:underline" href="#">İnsan alverinə qarşı
+                                məlumat</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="footerEnd flex justify-between items-center pb-[24px] border-b-2 border-[#ffffff1a]">
+                    <div class="flex items-center gap-[8px] ">
+                        <a href="#" class="socialBtn size-[40px] bg-white rounded-full text-[#01357e] inline-flex items-center justify-center">
+                            <i class="fa-brands fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="socialBtn size-[40px] bg-white rounded-full text-[#01357e] inline-flex items-center justify-center">
+                            <i class="fa-brands fa-twitter"></i>
+                        </a>
+                        <a href="#" class="socialBtn size-[40px] bg-white rounded-full text-[#01357e] inline-flex items-center justify-center">
+                            <i class="fa-brands fa-linkedin"></i>
+                        </a>
+                        <a href="#" class="socialBtn size-[40px] bg-white rounded-full text-[#01357e] inline-flex items-center justify-center">
+                            <i class="fa-solid fa-paper-plane"></i>
+                        </a>
+                        <a href="#" class="socialBtn size-[40px] bg-white rounded-full text-[#01357e] inline-flex items-center justify-center">
+                            <i class="fa-brands fa-youtube"></i>
+                        </a>
+                        <a href="#" class="socialBtn size-[40px] bg-white rounded-full text-[#01357e] inline-flex items-center justify-center">
+                            <i class="fa-brands fa-instagram"></i>
+                        </a>
+                        <a href="#" class="socialBtn size-[40px] bg-white rounded-full text-[#01357e] inline-flex items-center justify-center">
+                            <i class="fa-brands fa-tiktok"></i>
+                        </a>
+                    </div>
+                    <div>
+                        <button>
+                            <img src="assets/img/googlePlay.svg" alt="">
+                        </button>
+                        <button>
+                            <img src="assets/img/appStore.svg" alt="">
+                        </button>
+                    </div>
+                </div>
+                <div class="copyright py-[24px] flex items-center justify-between">
+                    <div class="text-[13px]">
+                        <p class="text-[#ffffffb3]">© 2024 Azerbaijan Airlines - All rights reserved</p>
+                    </div>
+                    <div class="text-[13px]">
+                        <p class="text-[#ffffffb3]">Designed by Rashad Agayev</p>
+                    </div>
+                    <div class="text-[13px]">
+                        <a href="#" class="hover:text-white text-[#ffffffb3] transition-all">Help Center</a>
+                    </div>
+                    <div class="text-[13px]">
+                        <a href="#" class="hover:text-white text-[#ffffffb3] transition-all">Privacy Policy</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+
+    <script src="assets/js/script.js"></script>
+    <script>
+        const options = document.querySelectorAll('input[name="gender"]');
+        const spans = document.querySelectorAll('.radio-label');
+
+        options.forEach((option, index) => {
+            option.addEventListener('change', () => {
+                spans.forEach(s => s.classList.remove('active'));
+                spans[index].classList.add('active');
+            });
+        });
+    </script>
+</body>
+
+</html>
